@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Home from './home/Home'
+import Home from './Home'
+import Linguagens from './Linguagens'
+import Humanas from './Humanas'
+import Questions from './Questions'
+import './App.css';
 
 class App extends Component {
     constructor() {
@@ -10,7 +14,13 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Route path="/" exact={true} component={Home} />
+                <Switch>
+                    <Route path="/" exact={true} component={Home} />
+                    <Route path="/linguagens" component={Linguagens} />
+                    <Route path="/humanas" component={Humanas} />
+                    <Route path="/questoes-linguagens" component={Questions} />
+                    <Route path="/questoes-humanas" component={Questions} />
+                </Switch>
             </BrowserRouter>
         );
     }

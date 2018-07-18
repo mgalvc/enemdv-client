@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import './Home.css';
 import { Link } from 'react-router-dom';
 
 class Home extends Component {
+    constructor() {
+        super();
+        this.options = this.options.bind(this);
+        this.handleKey = this.handleKey.bind(this);
+    }
+
     componentDidMount() {
         document.getElementsByClassName("container")[0].focus();
-
         window.responsiveVoice.speak("Olá, bem vindo ao simulado Enem");
-        window.responsiveVoice.speak("Pressione J para acessar o simulado de linguagens");
+        this.options();
+    }
+
+    options() {
+        window.responsiveVoice.speak("Pressione J para acessar o simulado de linguagens. Pressione K para acessar o simulado de ciências humanas. Pressione H para ouvir as opções novamente.");
     }
 
     handleKey(event) {
-        if (event.key == 'j')
-            window.responsiveVoice.speak("Você selecionou a prova de linguagens");
+        console.log(this.props.location.pathname)
+        if (event.key === 'j') {
+            this.props.history.push('/linguagens');
+        } else if (event.key === 'k') {
+            this.props.history.push('/humanas');
+        } else if (event.key === 'h') {
+            this.options();
+        }
     }
 
     render() {
@@ -23,18 +37,13 @@ class Home extends Component {
 
                 <div className="row text-center options">
                     <div className="col">
-                        <Link to="/simulado">
+                        <Link to="/linguagens">
                             <button className="btn">Simulado de Linguagens</button>
                         </Link>
                     </div>
                     <div className="col">
-                        <Link to="/simulado">
+                        <Link to="/humanas">
                             <button className="btn">Simulado de Ciências Humanas</button>
-                        </Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/simulado">
-                            <button className="btn">Simulado Completo</button>
                         </Link>
                     </div>
                 </div>
