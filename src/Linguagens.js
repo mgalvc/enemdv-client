@@ -5,15 +5,25 @@ class Linguagens extends Component {
     constructor() {
         super();
         this.handleKey = this.handleKey.bind(this);
+        this.intro = this.intro.bind(this);
     }
 
     componentDidMount() {
         document.getElementsByClassName("container")[0].focus();
-        window.responsiveVoice.speak("O simulado de linguagens contém X questões. Pressione J para começar o seu simulado quando estiver pronto");
+        this.intro()
+    }
+
+    intro() {
+        window.responsiveVoice.speak("O simulado de linguagens contém X questões. Pressione J para começar o seu simulado. Pressione H se quiser ouvir esta introdução novamente.");
     }
 
     handleKey(event) {
-        console.log(this.props.location.pathname);
+        if (event.key === 'j') {
+            this.props.history.push('/questoes-linguagens');
+        }
+        if (event.key === 'h') {
+            this.intro()
+        }
     }
 
     render() {

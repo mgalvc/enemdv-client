@@ -8,15 +8,15 @@ class Questions extends Component {
             type: '',
             question: {
                 number: 1,
-                text: "Antigamente, os pirralhos dobravam a língua diante dos pais e se um se esquecia de arear os dentes antes de cair nos braços de Morfeu, era capaz de entrar no couro. Não devia também se esquecer de lavar os pés, sem tugir nem mugir. Nada debater na cacunda do padrinho, nem de debicar os mais velhos, pois levava tunda. Ainda cedinho, aguava as plantas, ia ao corte e logo voltava aos penates. Não ficava mangando na rua, nem escapulia do mestre, mesmo que não entendesse patavina da instrução moral e cívica. O verdadeiro smart calçava botina de botões para comparecer todo liró ao copo d’água, se bem que no convescote apenas lambiscasse, para evitar flatos. Os bilontras é que eram um precipício, jogando com pau de dois bicos, pelo que carecia muita cautela e caldo de galinha. O melhor era pôr as barbas de molho diante de um treteiro de topete, depois de fintar e engambelar os coiós, e antes que se pusesse tudo em pratos limpos, ele abria o arco.",
+                text: "Texto da questão",
                 options: [
-                    { option: 'a', text: "a língua portuguesa de antigamente carecia de termos para se referira fatos e coisas do cotidiano." },
-                    { option: 'b', text: "o léxico do português representa uma realidade linguística variável e diversificada." },
-                    { option: 'c', text: "o português brasileiro apoia-se no léxico inglês para ser reconhecido como língua independente." },
-                    { option: 'd', text: "o português brasileiro se constitui evitando a ampliação do léxico proveniente do português europeu."},
-                    { option: 'e', text: "a heterogeneidade do português leva a uma estabilidade do seu léxico no eixo temporal." }
+                    { option: '1', text: "Texto da opção" },
+                    { option: '2', text: "Texto da opção" },
+                    { option: '3', text: "Texto da opção" },
+                    { option: '4', text: "Texto da opção" },
+                    { option: '5', text: "Texto da opção" },
                 ],
-                rightOption: 0
+                rightOption: '3'
             }
         }
     }
@@ -27,6 +27,24 @@ class Questions extends Component {
         } else {
             this.setState({ type: 'humanas' })
         }
+        this.readQuestion()
+        this.readOptions()
+    }
+
+    readQuestion() {
+        window.responsiveVoice.speak("Questão " + this.state.question.number)
+        window.responsiveVoice.speak(this.state.question.text)
+        window.responsiveVoice.speak("Pressione H se quiser ouvir o texto novamente")
+    }
+
+    readOptions() {
+        let options = this.state.question.options
+        window.responsiveVoice.speak("Selecione com o teclado numérico a alternativa correta.")
+        for (let i in options) {
+            window.responsiveVoice.speak("Alternativa " + options[i].option)
+            window.responsiveVoice.speak(options[i].text)
+        }
+        window.responsiveVoice.speak("Pressione L se quiser ouvir as alternativas novamente")
     }
 
     renderOptions() {

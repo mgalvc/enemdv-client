@@ -13,7 +13,9 @@ class Humanas extends Component {
     }
 
     handleKey(event) {
-        console.log(this.props.location.pathname);
+        if (event.key === 'j') {
+            this.props.history.push('/questoes-humanas');
+        }
     }
 
     render() {
