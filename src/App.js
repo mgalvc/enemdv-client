@@ -4,6 +4,7 @@ import Home from './Home'
 import Linguagens from './Linguagens'
 import Humanas from './Humanas'
 import Questions from './Questions'
+import Finish from './Finish'
 import './App.css';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
                     <Route path="/humanas" component={Humanas} />
                     <Route path="/questoes-linguagens" component={Questions} />
                     <Route path="/questoes-humanas" component={Questions} />
+                    <Route path="/fim/:hits" component={Finish} />
                 </Switch>
             </BrowserRouter>
         );
