@@ -45,7 +45,7 @@ class Questions extends Component {
             this.setState({ type: 'linguagens' })
         } else {
             this.setState({ type: 'humanas' })
-            axios.get('http://localhost:3000/api/v1/exams/1/questions')
+            axios.get('https://enemdv-api.herokuapp.com/api/v1/exams/1/questions')
                 .then(res => {
                     console.log(res.data.questions)
                     this.setState({ questions: res.data.questions})
