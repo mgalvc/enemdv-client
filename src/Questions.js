@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
-import questionsData from './QuestionsData'
+import axios from 'axios'
 
 class Questions extends Component {
     constructor() {
@@ -10,7 +10,30 @@ class Questions extends Component {
             index: 0,
             answer: '',
             hits: 0,
-            questions: questionsData
+            questions: [
+                {
+                    order: 1,
+                    wording: "",
+                    options: [
+                        {
+                            description: ""
+                        },
+                        {
+                            description: "",
+                            veracity: true
+                        },
+                        {
+                            description: ""
+                        },
+                        {
+                            description: ""
+                        },
+                        {
+                            description: ""
+                        }
+                    ]
+                }
+            ]
         }
         this.handleKey = this.handleKey.bind(this)
         this.numberOptions = ['1', '2', '3', '4', '5']
@@ -22,13 +45,17 @@ class Questions extends Component {
             this.setState({ type: 'linguagens' })
         } else {
             this.setState({ type: 'humanas' })
+            axios.get('http://localhost:3000/api/v1/exams/1/questions')
+                .then(res => {
+                    console.log(res.data.questions)
+                    this.setState({ questions: res.data.questions})
+                })
         }
         this.startQuestion()
     }
 
     startQuestion() {
-        this.readQuestion()
-        this.readOptions()
+        window.responsiveVoice.speak("Pressione H para ouvir o texto da questão. Pressione L para ouvir as alternativas.")
     }
 
     handleKey(event) {
@@ -40,8 +67,13 @@ class Questions extends Component {
             this.readOptions()
         }
 
+        if (event.key === 'u') {
+            this.props.history.push('/fim/' + this.state.hits);
+        }
+
         if (this.numberOptions.includes(event.key)) {
-            this.state.answer = event.key
+            this.state.answer = event.key - 1
+            console.log(this.state.answer)
             window.responsiveVoice.speak("Você selecionou a alternativa " + event.key + ". Pressione J para confirmar sua escolha")
         }
 
@@ -51,12 +83,11 @@ class Questions extends Component {
     }
 
     checkAnswer() {
-        if (this.state.answer === this.state.questions[this.state.index].rightOption) {
-            window.responsiveVoice.speak("Parabéns, você selecionou a resposta correta.")
+        let question = this.state.questions[this.state.index]
+        if (question.options[this.state.answer].veracity === true) {
             this.state.hits++;
-        } else {
-            window.responsiveVoice.speak("Que pena, você errou. A alternativa correta é: " + this.state.questions[this.state.index].rightOption)
         }
+
         if (this.state.index < this.state.questions.length-1) {
             this.setState({ index: ++this.state.index })
             //this.state.index++;
@@ -67,8 +98,8 @@ class Questions extends Component {
 
     readQuestion() {
         let question = this.state.questions[this.state.index]
-        window.responsiveVoice.speak("Questão " + question.number)
-        window.responsiveVoice.speak(question.text)
+        window.responsiveVoice.speak("Questão " + (this.state.index+1))
+        window.responsiveVoice.speak(question.wording)
         window.responsiveVoice.speak("Pressione H se quiser ouvir o texto novamente")
     }
 
@@ -76,8 +107,7 @@ class Questions extends Component {
         let options = this.state.questions[this.state.index].options
         window.responsiveVoice.speak("Selecione com o teclado numérico a alternativa correta.")
         for (let i in options) {
-            window.responsiveVoice.speak("Alternativa " + options[i].option)
-            window.responsiveVoice.speak(options[i].text)
+            window.responsiveVoice.speak("Alternativa " + options[i].description)
         }
         window.responsiveVoice.speak("Pressione L se quiser ouvir as alternativas novamente")
     }
@@ -87,7 +117,7 @@ class Questions extends Component {
         let optionsToRender = []
 
         for (let i = 0; i < 5; i++) {
-            optionsToRender.push(<h3>{options[i].option}. {options[i].text}</h3>)
+            optionsToRender.push(<h3>{options[i].description}</h3>)
         }
 
         return optionsToRender
@@ -97,8 +127,8 @@ class Questions extends Component {
         return (
             <div className="container" tabIndex="0" onKeyPress={this.handleKey}>
                 <h1 className="question type">Prova de {this.state.type}</h1>
-                <h2 className="question number">Questão {this.state.questions[this.state.index].number}</h2>
-                <h3 className="question text">{this.state.questions[this.state.index].text}</h3>
+                <h2 className="question number">Questão {this.state.questions[this.state.index].id}</h2>
+                <h3 className="question text">{this.state.questions[this.state.index].wording}</h3>
                 <div className="options">
                     {this.renderOptions()}
                 </div>
