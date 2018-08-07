@@ -15,7 +15,7 @@ class Home extends Component {
     }
 
     options() {
-        window.responsiveVoice.speak("Pressione J para acessar o simulado de linguagens. Pressione K para acessar o simulado de ciências humanas. Pressione H para ouvir as opções novamente.");
+        window.responsiveVoice.speak("Pressione K para acessar o simulado de ciências humanas. Pressione H para ouvir as opções novamente.");
     }
 
     handleKey(event) {
@@ -36,11 +36,6 @@ class Home extends Component {
                 <h3 className="text-center">O que você quer estudar hoje?</h3>
 
                 <div className="row text-center options">
-                    <div className="col">
-                        <Link to="/linguagens">
-                            <button className="btn">Simulado de Linguagens</button>
-                        </Link>
-                    </div>
                     <div className="col">
                         <Link to="/humanas">
                             <button className="btn">Simulado de Ciências Humanas</button>

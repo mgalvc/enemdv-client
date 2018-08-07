@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css'
+import questionsData from './QuestionsData'
 
 class Questions extends Component {
     constructor() {
@@ -9,20 +10,7 @@ class Questions extends Component {
             index: 0,
             answer: '',
             hits: 0,
-            questions: [
-                {
-                    number: 1,
-                    text: "Texto da questão",
-                    options: [
-                        { option: '1', text: "Texto da opção" },
-                        { option: '2', text: "Texto da opção" },
-                        { option: '3', text: "Texto da opção" },
-                        { option: '4', text: "Texto da opção" },
-                        { option: '5', text: "Texto da opção" },
-                    ],
-                    rightOption: '3'
-                }
-            ]
+            questions: questionsData
         }
         this.handleKey = this.handleKey.bind(this)
         this.numberOptions = ['1', '2', '3', '4', '5']
@@ -69,10 +57,11 @@ class Questions extends Component {
         } else {
             window.responsiveVoice.speak("Que pena, você errou. A alternativa correta é: " + this.state.questions[this.state.index].rightOption)
         }
-        this.state.index++;
-        if (this.state.index < this.state.questions.length)
+        if (this.state.index < this.state.questions.length-1) {
+            this.setState({ index: ++this.state.index })
+            //this.state.index++;
             this.startQuestion()
-        else
+        } else
             this.props.history.push('/fim/' + this.state.hits);
     }
 

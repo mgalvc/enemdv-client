@@ -17,9 +17,7 @@ class App extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact={true} component={Home} />
-                    <Route path="/linguagens" component={Linguagens} />
                     <Route path="/humanas" component={Humanas} />
-                    <Route path="/questoes-linguagens" component={Questions} />
                     <Route path="/questoes-humanas" component={Questions} />
                     <Route path="/fim/:hits" component={Finish} />
                 </Switch>

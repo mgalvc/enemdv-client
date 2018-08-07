@@ -3,6 +3,21 @@ import { Link } from 'react-router-dom';
 import './App.css'
 
 class Finish extends Component {
+    constructor() {
+        super();
+        this.handleKey = this.handleKey.bind(this);
+    }
+
+    handleKey(event) {
+        if (event.key === 'j') {
+            this.props.history.push('/');
+        }
+
+        if (event.key === 'h') {
+            window.responsiveVoice.speak("Você terminou a prova com." + this.props.match.params.hits + ". Acertos. Pressione J para voltar para a página inicial.")
+        }
+    }
+
     componentDidMount() {
         document.getElementsByClassName("container")[0].focus();
         window.responsiveVoice.speak("Você terminou a prova com." + this.props.match.params.hits + ". Acertos. Pressione J para voltar para a página inicial.")

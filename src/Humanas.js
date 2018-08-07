@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import questionsData from './QuestionsData'
 
 class Humanas extends Component {
     constructor() {
@@ -9,7 +10,7 @@ class Humanas extends Component {
 
     componentDidMount() {
         document.getElementsByClassName("container")[0].focus();
-        window.responsiveVoice.speak("O simulado de humanas contém X questões. Pressione J para começar o seu simulado quando estiver pronto");
+        window.responsiveVoice.speak("O simulado de humanas contém." + questionsData.length +  "questões. Pressione J para começar o seu simulado quando estiver pronto");
     }
 
     handleKey(event) {
@@ -26,7 +27,7 @@ class Humanas extends Component {
                 <div className="row options text-center">
                     <div className="col">
                         <div className="container">
-                            <h4>X QUESTÕES</h4>
+                            <h4>{ questionsData.length } QUESTÕES</h4>
                         </div>
                     </div>
                     <div className="col">
