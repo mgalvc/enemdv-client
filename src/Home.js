@@ -20,9 +20,7 @@ class Home extends Component {
 
     handleKey(event) {
         console.log(this.props.location.pathname)
-        if (event.key === 'j') {
-            this.props.history.push('/linguagens');
-        } else if (event.key === 'k') {
+        if (event.key === 'k') {
             this.props.history.push('/humanas');
         } else if (event.key === 'h') {
             this.options();
